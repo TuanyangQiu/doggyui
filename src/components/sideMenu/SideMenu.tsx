@@ -1,6 +1,6 @@
 import React from "react";
 import Styles from './SideMenu.module.css';
-import { sideMenuList, productList1 } from "./mockup";
+import { sideMenuList } from "./mockup";
 import { Menu } from "antd";
 import { GifOutlined, GiftOutlined } from "@ant-design/icons";
 export const SideMenu: React.FC = () => {
