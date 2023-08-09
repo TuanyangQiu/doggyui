@@ -13,9 +13,7 @@ export const Header: React.FC = () => {
                 style={{ marginLeft: 15 }}
                 overlay={<Menu items={[{ key: "1", label: "中文" },
                 { key: "2", label: "English" }]} />}
-                icon={<GlobalOutlined />}>
-                yuyan
-            </Dropdown.Button>
+                icon={<GlobalOutlined />}>EN/中  </Dropdown.Button>
 
             <Button.Group className={styles['button-group']}>
                 <Button>Register</Button>
