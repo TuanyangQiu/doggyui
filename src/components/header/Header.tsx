@@ -3,8 +3,15 @@ import styles from './Header.module.css';
 import logo from '../../assets/logo.svg';
 import { Layout, Typography, Input, Menu, Button, Dropdown } from 'antd';
 import { GlobalOutlined } from '@ant-design/icons';
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 
 export const Header: React.FC = () => {
+    const params = useParams();
+    const location = useLocation();
+    const navigate = useNavigate();
+
+
+
     return <div className={styles['app-header']}>
         <div className={styles['top-header']}>
             {/* <div  className={styles.inner}> */}
@@ -16,15 +23,21 @@ export const Header: React.FC = () => {
                 icon={<GlobalOutlined />}>EN/中  </Dropdown.Button>
 
             <Button.Group className={styles['button-group']}>
-                <Button>Register</Button>
-                <Button>Login</Button>
+                <Button onClick={() => navigate("/register")} >Register</Button>
+                <Button onClick={() => navigate("/signin")} >Sign In</Button>
             </Button.Group>
             {/* </div> */}
         </div>
         <Layout.Header className={styles['main-header']}>
-            <img src={logo} alt="logo" className={styles['App-logo']} />
-            <Typography.Title className={styles.title} level={3}>Doggy Travel</Typography.Title>
-            <Input.Search className={styles['search-input']} placeholder='please input travel destination, countries, types' />
+            <div style={{ position: "absolute", width: 500 }} onClick={() => navigate("/")}>
+                <img src={logo} alt="logo" className={styles['App-logo']} />
+                <Typography.Title className={styles.title} level={3}>Doggy Travel</Typography.Title>
+            </div>
+            <div style={{ marginLeft: 200 }} >
+                <Input.Search className={styles['search-input']} placeholder='please input travel destination, countries, types' />
+            </div>
+
+
         </Layout.Header>
 
         <Menu mode={"horizontal"}
