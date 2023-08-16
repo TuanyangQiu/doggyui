@@ -1,5 +1,5 @@
 import i18n from "i18next";
-
+import { CHANGE_LANGUAGE } from "./languageActions";
 
 
 export interface LanguageState {
@@ -19,7 +19,7 @@ const defaultLangState: LanguageState = {
 export default (state = defaultLangState, action) => {
 
     switch (action.type) {
-        case "change_language":
+        case CHANGE_LANGUAGE:
             //Change language here, but it is not that good, 
             //because it violates the requirement of pure function 
             i18n.changeLanguage(action.payload);
