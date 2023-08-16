@@ -5,18 +5,41 @@ import { Layout, Typography, Input, Menu, Button, Dropdown } from 'antd';
 import { GlobalOutlined } from '@ant-design/icons';
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { withRouter, RouteComponentProps } from "../../helpers/withRouter";
+import store from "../../redux/store";
+import { LanguageState } from "../../redux/languageReducer";
 
+interface State extends LanguageState {
 
-export class HeaderComponent extends React.Component<RouteComponentProps> {
+}
+
+export class HeaderComponent extends React.Component<RouteComponentProps, State> {
     constructor(props) {
 
         super(props);
+        const storeLangState = store.getState();
+        this.state = {
+            language: storeLangState.language,
+            languageList: storeLangState.languageList
+        }
+        
     }
-    // const params = useParams();
-    // const location = useLocation();
-    // const navigate = useNavigate();
 
-     
+    componentDidMount(): void {
+        store.subscribe(this.handleStoreDataChnage);
+    }
+
+    handleStoreDataChnage = () => {
+        const newStoreState = store.getState();
+        this.setState({ language: newStoreState.language });
+
+    }
+
+    langMenuSwitchHandler = (e) => {
+
+        // console.log("menu clicked event:  ", e);
+        const action = { type: "change_language", payload: e.key };
+        store.dispatch(action);
+    }
 
     render() {
         const { navigate } = this.props;
@@ -26,12 +49,12 @@ export class HeaderComponent extends React.Component<RouteComponentProps> {
                 <Typography.Text>Welcome</Typography.Text>
                 <Dropdown.Button
                     style={{ marginLeft: 15 }}
-                    overlay={<Menu items={
-                        
-                        [{ key: "1", label: "中文" },
-                        { key: "2", label: "English" }]
-                    } />}
-                    icon={<GlobalOutlined />}>EN/中  </Dropdown.Button>
+                    overlay={<Menu onClick={this.langMenuSwitchHandler}
+                        items={this.state.languageList.map(m => { return { key: m.code, label: m.name } })
+                            // [{ key: "1", label: "中文" },
+                            // { key: "2", label: "English" }]
+                        } />}
+                    icon={<GlobalOutlined />}> {this.state.language === "en" ? "ENG" : "中"} </Dropdown.Button>
 
                 <Button.Group className={styles['button-group']}>
                     <Button onClick={() => navigate("/register")} >Register</Button>
@@ -66,4 +89,4 @@ export class HeaderComponent extends React.Component<RouteComponentProps> {
     }
 }
 
-export const Header  = withRouter(HeaderComponent);
+export const Header = withRouter(HeaderComponent);
