@@ -11,11 +11,10 @@ import BussPartner1 from '../../assets/images/BussPartner_facebook.png';
 import BussPartner2 from '../../assets/images/BussPartner_Instagram.png';
 import BussPartner3 from '../../assets/images/BussPartner_Microsoft.png';
 import BussPartner4 from '../../assets/images/BussPartner_Youtube.png';
-
-export class HomePage extends React.Component {
-
-
+import { withTranslation, WithTranslation } from "react-i18next";
+class HomePageComponent extends React.Component<WithTranslation> {
     render(): React.ReactNode {
+        const { t } = this.props;
         return (
             <>
                 <Header />
@@ -32,13 +31,15 @@ export class HomePage extends React.Component {
                     </Row>
 
                     <ProductCollection
-                        title={<Typography.Title level={3} type="warning" >Popular Destinations</Typography.Title>}
+                        title={<Typography.Title level={3} type="warning" >{t("home_page.most_popular_dest")}</Typography.Title>}
                         sideImage={SideImage1}
                         products={popularDestinationsProudctList} />
                 </div>
-                <BusinessPartner title="Business Partners" imageUrlList={[BussPartner1, BussPartner3, BussPartner2, BussPartner3, BussPartner4, BussPartner1, BussPartner4, BussPartner2, BussPartner3, BussPartner4, BussPartner1]} />
+                <BusinessPartner title={t("home_page.business_partner")} imageUrlList={[BussPartner1, BussPartner3, BussPartner2, BussPartner3, BussPartner4, BussPartner1, BussPartner4, BussPartner2, BussPartner3, BussPartner4, BussPartner1]} />
                 <Footer />
 
             </>)
     }
-} 
+}
+
+export const HomePage = withTranslation()(HomePageComponent);
