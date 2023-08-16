@@ -1,0 +1,34 @@
+{
+    "header": {
+        "register":"Register",
+        "signin":"Sign In",
+        "home_page": "Home",
+        "weekend": "Weekend",
+        "group": "Group",
+        "backpack": "Backpack",
+        "private": "Private",
+        "cruise": "Cruise",
+        "hotel": "Hotel & Attractions",
+        "local": "Local",
+        "theme": "Theme",
+        "custom": "Custom",
+        "study": "Study",
+        "visa":"Visa",
+        "enterprise":"Enterprise",
+        "high_end":"High-end",
+        "outdoor":"Outdoor",
+        "insurance":"Insurance",
+        "search_tips":"Please input destination or travel types"
+    },
+    "footer": {
+        "copyright" : "All rights reserved @ DoggyUI"
+    },
+    "home_page": {
+        "most_popular_dest": "Most Popular Destination",
+        "hot_recommended": "Hot Recommended",
+        "new_arrival": "New arrival",
+        "domestic_travel": "Domestic travel",
+        "business_partner": "Business Partner",
+        "start_from": "(start from)"
+    }
+}
