@@ -17,7 +17,7 @@ export const BusinessPartner: React.FC<PropsType> = ({ title, imageUrlList }) =>
             <Row>
                 {
                     imageUrlList.map((m, index) => (
-                        <Col span={6}>
+                        <Col key={index} span={6}>
                             <img src={m} alt={"BusinessParner" + index} style={{ width: "50%" }} />
                         </Col>
                     ))
