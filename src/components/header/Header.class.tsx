@@ -8,6 +8,7 @@ import { withRouter, RouteComponentProps } from "../../helpers/withRouter";
 import store from "../../redux/store";
 import { LanguageState } from "../../redux/language/languageReducer";
 import { withTranslation, WithTranslation } from "react-i18next";
+import { changeLanguageActionCreator } from "../../redux/language/languageActions";
 interface State extends LanguageState {
 
 }
@@ -23,7 +24,7 @@ export class HeaderComponent extends React.Component<RouteComponentProps & WithT
             language: storeLangState.language,
             languageList: storeLangState.languageList
         }
-        
+
     }
 
     componentDidMount(): void {
@@ -37,10 +38,7 @@ export class HeaderComponent extends React.Component<RouteComponentProps & WithT
     }
 
     langMenuSwitchHandler = (e) => {
-
-        // console.log("menu clicked event:  ", e);
-        const action = { type: "change_language", payload: e.key };
-        store.dispatch(action);
+        store.dispatch(changeLanguageActionCreator(e.key));
     }
 
     render() {

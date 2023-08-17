@@ -1,5 +1,5 @@
 import i18n from "i18next";
-import { CHANGE_LANGUAGE } from "./languageActions";
+import { CHANGE_LANGUAGE, LanguageActionTypes } from "./languageActions";
 
 
 export interface LanguageState {
@@ -16,7 +16,7 @@ const defaultLangState: LanguageState = {
         { name: "中文", code: "zh" }]
 }
 
-export default (state = defaultLangState, action) => {
+export default (state = defaultLangState, action: LanguageActionTypes) => {
 
     switch (action.type) {
         case CHANGE_LANGUAGE:
