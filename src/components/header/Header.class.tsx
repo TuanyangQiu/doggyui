@@ -19,7 +19,7 @@ const mapStateToProps = (state: LanguageState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
-        changeL: (code: "en" | "zh") => {
+        changeLanguage: (code: "en" | "zh") => {
             const action = changeLanguageActionCreator(code);
             dispatch(action);
         }
@@ -38,7 +38,7 @@ export class HeaderComponent extends
     React.Component<PropsType> {
 
     langMenuSwitchHandler = (e) => {
-        this.props.changeL(e.key);
+        this.props.changeLanguage(e.key);
     }
 
     render() {
