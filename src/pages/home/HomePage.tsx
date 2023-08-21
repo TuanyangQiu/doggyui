@@ -31,8 +31,7 @@ class HomePageComponent extends React.Component<WithTranslation, State> {
 
     async componentDidMount() {
         try {
-            const resp = await axios.get("http://127.0.0.1:5022/TouristRoutes?pageNumber=1&pageSize=9",
-                { headers: { Accept: "application/json" } });
+            const resp = await axios.get("http://127.0.0.1:5022/TouristRoutes?pageNumber=1&pageSize=9");
 
             const tempProd = (resp.data as any[]).map((m, index) => {
                 return {
