@@ -9,11 +9,12 @@ import { withTranslation, WithTranslation } from "react-i18next";
 import { changeLanguageActionCreator } from "../../redux/language/languageActions";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { RootState } from "../../redux/store";
 
-const mapStateToProps = (state: LanguageState) => {
+const mapStateToProps = (state: RootState) => {
     return {
-        language: state.language,
-        languageList: state.languageList
+        language: state.language.language,
+        languageList: state.language.languageList
     }
 }
 
@@ -32,7 +33,7 @@ type PropsType =
     RouteComponentProps &//react router props
     WithTranslation & //i18next props
     ReturnType<typeof mapStateToProps> &//redux store
-    ReturnType<typeof mapDispatchToProps> ;
+    ReturnType<typeof mapDispatchToProps>;
 
 export class HeaderComponent extends
     React.Component<PropsType> {
