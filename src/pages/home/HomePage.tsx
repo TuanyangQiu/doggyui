@@ -11,26 +11,52 @@ import BussPartner3 from '../../assets/images/BussPartner_Microsoft.png';
 import BussPartner4 from '../../assets/images/BussPartner_Youtube.png';
 import { withTranslation, WithTranslation } from "react-i18next";
 import axios from "axios";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
+import { RootState } from "../../redux/store";
+import {
+    fetchRecommendProductsStartActionCreator,
+    fetchRecommendProductsSuccessActionCreator,
+    fetchRecommendProductsFailActionCreator
+} from '../../redux/recommendProducts/recommendProductsActions';
 
-interface State {
-    productionList: any[],
-    loading: boolean,
-    requestTouristRoutesError: string | null
+const mapStateToProps = (state: RootState) => {
+    return {
+        loading: state.recommendProducts.loading,
+        requestError: state.recommendProducts.requestError,
+        ProductsList: state.recommendProducts.ProductsList
+    }
 }
 
-class HomePageComponent extends React.Component<WithTranslation, State> {
+const mapDispatchToProps = (dispatch: Dispatch) => {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            productionList: [],
-            loading: true,
-            requestTouristRoutesError: null
+    return {
+        startFetch: () => {
+            dispatch(fetchRecommendProductsStartActionCreator());
+        },
+        fetchOK: (data: any) => {
+
+            dispatch(fetchRecommendProductsSuccessActionCreator(data))
+        },
+
+        fetchNG: (error: any) => {
+            dispatch(fetchRecommendProductsFailActionCreator(error));
         }
+
+
     }
+
+}
+
+type PropsType = WithTranslation
+    & ReturnType<typeof mapStateToProps>
+    & ReturnType<typeof mapDispatchToProps>;
+
+class HomePageComponent extends React.Component<PropsType> {
 
     async componentDidMount() {
         try {
+            this.props.startFetch();
             const resp = await axios.get("http://127.0.0.1:5022/TouristRoutes?pageNumber=1&pageSize=9");
 
             const tempProd = (resp.data as any[]).map((m, index) => {
@@ -42,17 +68,22 @@ class HomePageComponent extends React.Component<WithTranslation, State> {
                 }
             });
 
-            this.setState({ productionList: tempProd, loading: false, requestTouristRoutesError: null });
+            this.props.fetchOK(tempProd);
+
         } catch (error) {
-            if (error instanceof Error)
-                this.setState({ productionList: [], loading: false, requestTouristRoutesError: error.message });
+
+            // if (error instanceof Error) 
+            {
+                console.log("network 1:  ", error);
+                this.props.fetchNG(error);
+            }
         }
     }
 
 
     render(): React.ReactNode {
-        const { t } = this.props;
-        const { productionList, loading, requestTouristRoutesError } = this.state;
+        const { t, loading, requestError, ProductsList } = this.props;
+
         if (loading) {
             return (
                 <Spin
@@ -67,10 +98,12 @@ class HomePageComponent extends React.Component<WithTranslation, State> {
                 />
             );
         }
-        if (requestTouristRoutesError) {
-            return <div>Sorry, {requestTouristRoutesError}</div>;
-        }
 
+        console.log("network2:  ", requestError);
+        if (requestError) {
+            return <div>Sorry, {requestError.message}</div>;
+        }
+        console.log("going to display ..");
         return (
             <>
                 <Header />
@@ -89,7 +122,7 @@ class HomePageComponent extends React.Component<WithTranslation, State> {
                     <ProductCollection
                         title={<Typography.Title level={3} type="warning" >{t("home_page.most_popular_dest")}</Typography.Title>}
                         sideImage={SideImage1}
-                        products={productionList} />
+                        products={ProductsList} />
 
                 </div>
                 <BusinessPartner title={t("home_page.business_partner")} imageUrlList={[BussPartner1, BussPartner3, BussPartner2, BussPartner3, BussPartner4, BussPartner1, BussPartner4, BussPartner2, BussPartner3, BussPartner4, BussPartner1]} />
@@ -99,4 +132,4 @@ class HomePageComponent extends React.Component<WithTranslation, State> {
     }
 }
 
-export const HomePage = withTranslation()(HomePageComponent);
+export const HomePage = connect(mapStateToProps, mapDispatchToProps)(withTranslation()(HomePageComponent));
