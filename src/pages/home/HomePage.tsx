@@ -10,15 +10,9 @@ import BussPartner2 from '../../assets/images/BussPartner_Instagram.png';
 import BussPartner3 from '../../assets/images/BussPartner_Microsoft.png';
 import BussPartner4 from '../../assets/images/BussPartner_Youtube.png';
 import { withTranslation, WithTranslation } from "react-i18next";
-import axios from "axios";
 import { connect } from "react-redux";
-import { Dispatch } from "redux";
 import { RootState } from "../../redux/store";
-import {
-    fetchRecommendProductsStartActionCreator,
-    fetchRecommendProductsSuccessActionCreator,
-    fetchRecommendProductsFailActionCreator
-} from '../../redux/recommendProducts/recommendProductsActions';
+import { FetchRecommendProductsActionCreator } from '../../redux/recommendProducts/recommendProductsActions';
 
 const mapStateToProps = (state: RootState) => {
     return {
@@ -28,22 +22,10 @@ const mapStateToProps = (state: RootState) => {
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
+const mapDispatchToProps = (dispatch) => {
 
     return {
-        startFetch: () => {
-            dispatch(fetchRecommendProductsStartActionCreator());
-        },
-        fetchOK: (data: any) => {
-
-            dispatch(fetchRecommendProductsSuccessActionCreator(data))
-        },
-
-        fetchNG: (error: any) => {
-            dispatch(fetchRecommendProductsFailActionCreator(error));
-        }
-
-
+        FetchProductData: () => { dispatch(FetchRecommendProductsActionCreator()) }
     }
 
 }
@@ -54,30 +36,8 @@ type PropsType = WithTranslation
 
 class HomePageComponent extends React.Component<PropsType> {
 
-    async componentDidMount() {
-        try {
-            this.props.startFetch();
-            const resp = await axios.get("http://127.0.0.1:5022/TouristRoutes?pageNumber=1&pageSize=9");
-
-            const tempProd = (resp.data as any[]).map((m, index) => {
-                return {
-                    id: index,
-                    title: m.Title,
-                    touristRoutePictures: [{ url: "https://cdn.pixabay.com/photo/2013/07/18/20/26/sea-164989_1280.jpg" }],
-                    price: m.Price
-                }
-            });
-
-            this.props.fetchOK(tempProd);
-
-        } catch (error) {
-
-            // if (error instanceof Error) 
-            {
-                console.log("network 1:  ", error);
-                this.props.fetchNG(error);
-            }
-        }
+    componentDidMount() {
+        this.props.FetchProductData();
     }
 
 
@@ -103,7 +63,7 @@ class HomePageComponent extends React.Component<PropsType> {
         if (requestError) {
             return <div>Sorry, {requestError.message}</div>;
         }
-        console.log("going to display ..");
+        
         return (
             <>
                 <Header />
