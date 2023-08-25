@@ -18,7 +18,6 @@ export const Header: React.FC = () => {
     const { t } = useTranslation();
 
     const langMenuSwitchHandler = (e) => {
-        console.log('langMenuSwitchHandler', e);
         dispatch(changeLanguageActionCreator(e.key));
     }
     return <div className={styles['app-header']}>

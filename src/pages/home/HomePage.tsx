@@ -59,7 +59,6 @@ class HomePageComponent extends React.Component<PropsType> {
             );
         }
 
-        console.log("network2:  ", requestError);
         if (requestError) {
             return <div>Sorry, {requestError.message}</div>;
         }
