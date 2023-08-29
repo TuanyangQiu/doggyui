@@ -70,12 +70,12 @@ export const ProductIntro: React.FC<PropsType> = ({
             ),
         },
         {
-            key: 2,
+            key: 3,
             title: "Get Coupon",
             description: coupons ? discount : "No available coupon",
         },
         {
-            key: 2,
+            key: 4,
             title: "Rating",
             description: (
                 <>
@@ -103,7 +103,7 @@ export const ProductIntro: React.FC<PropsType> = ({
             </div>
             <Carousel autoplay slidesToShow={3}>
                 {
-                    pictures.map(p => <Image src={p} height={150}></Image>)
+                    pictures.map((p ,index)=> <Image key={index} src={p} height={150}></Image>)
                 }
 
             </Carousel>
