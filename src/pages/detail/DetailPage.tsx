@@ -4,7 +4,10 @@ import axios from "axios";
 import { Spin, Row, Col, DatePicker, Divider, Typography, Anchor, Menu, MenuProps } from "antd";
 import { Header, Footer, ProductIntro, ProductComment } from "../../components";
 import Styles from './DetailPage.module.css';
-import { mockupComments ,productPictures} from './mockupDetails';
+import { mockupComments, productPictures } from './mockupDetails';
+import { productDetailSlice } from '../../redux/productDetail/slice';
+import { useSelector } from '../../redux/hooks';
+import { useDispatch } from 'react-redux';
 type MatchParams = {
     touristRouteId: string;
 }
@@ -15,7 +18,6 @@ const menuItems: MenuProps['items'] = [
     {
         label: (<a href="#feature"> Feature</a>),
         key: '1',
-
     },
     {
         label: (<a href="#fees"> Fees</a>),
@@ -26,7 +28,7 @@ const menuItems: MenuProps['items'] = [
         key: '3',
     },
     {
-        label: (<a href="#commnet"> Comments</a>),
+        label: (<a href="#comments"> Comments</a>),
         key: '4',
     },
 ];
@@ -34,22 +36,28 @@ const menuItems: MenuProps['items'] = [
 export const DetailPage: React.FC = () => {
 
     const { touristRouteId } = useParams<MatchParams>();
-    const [loading, setLoading] = useState<boolean>(true);
-    const [productInfo, setProductInfo] = useState<any>(null);
-    const [requestError, setRequestError] = useState<string | null>(null);
+    // const [loading, setLoading] = useState<boolean>(true);
+    // const [productInfo, setProductInfo] = useState<any>(null);
+    // const [requestError, setRequestError] = useState<string | null>(null);
+    const loading = useSelector((state) => state.productDetailReducer.loading);
+    const productInfo = useSelector(state => state.productDetailReducer.data);
+    const requestError = useSelector(state => state.productDetailReducer.requestError);
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const fetchProductDetails = async () => {
-            setLoading(true);
+            dispatch(productDetailSlice.actions.fetchStart());
+            //setLoading(true);
             try {
                 const { data } = await axios.get(`http://localhost:5022/TouristRoutes/${touristRouteId}`);
-
-                setProductInfo(data);
+                dispatch(productDetailSlice.actions.fetchSuccess(data));
+                //setProductInfo(data);
             } catch (error) {
-                setRequestError(error instanceof Error ? error.message : "error!");
+                dispatch(productDetailSlice.actions.fetchFail(error instanceof Error ? error.message : "unknown error!"));
+                //setRequestError(error instanceof Error ? error.message : "error!");
             }
-            setLoading(false);
-
+            // setLoading(false);
         }
 
         fetchProductDetails();
