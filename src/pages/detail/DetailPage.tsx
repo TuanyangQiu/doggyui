@@ -2,13 +2,20 @@ import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
 import axios from "axios";
 import { Spin, Row, Col, DatePicker, Space } from "antd";
-import { Header, Footer } from "../../components";
+import { Header, Footer, ProductIntro } from "../../components";
 import Styles from './DetailPage.module.css';
 type MatchParams = {
     touristRouteId: string;
 }
 const { RangePicker } = DatePicker;
 
+// test picture url, will be updated later
+const testpicurl: string[] = [
+    "https://cdn.pixabay.com/photo/2013/07/18/20/26/sea-164989_1280.jpg",
+    "https://cdn.pixabay.com/photo/2013/07/18/20/26/sea-164989_1280.jpg",
+    "https://cdn.pixabay.com/photo/2013/07/18/20/26/sea-164989_1280.jpg",
+    "https://cdn.pixabay.com/photo/2013/07/18/20/26/sea-164989_1280.jpg",
+    "https://cdn.pixabay.com/photo/2013/07/18/20/26/sea-164989_1280.jpg"]
 export const DetailPage: React.FC = () => {
 
     const { touristRouteId } = useParams<MatchParams>();
@@ -62,7 +69,18 @@ export const DetailPage: React.FC = () => {
                 {/* Product introduction and date selection */}
                 <div className={Styles["product-intro-container"]}></div>
                 <Row>
-                    <Col span={13}></Col>
+                    <Col span={13}>
+                        <ProductIntro
+                            title={productInfo.Title}
+                            shortDescription={productInfo.Description}
+                            price={productInfo.Price}
+                            coupons={"no cupon"}
+                            points={"no point"}
+                            discount={"no discount"}
+                            rating={productInfo.Rating}
+                            pictures={testpicurl} />
+                        {/* pictures={productInfo.TouristRoutePictures.map(p => p.url)} /> */}
+                    </Col>
                     <Col span={11}>
                         <RangePicker style={{ marginTop: 20 }} />
                     </Col>
