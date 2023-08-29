@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { stat } from "fs";
-import { act } from "react-dom/test-utils";
+import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+
 interface productDetailState {
 
     loading: boolean,
@@ -14,24 +14,32 @@ const initialState: productDetailState = {
     requestError: null,
     data: null
 }
+
+export const getProductDetailAsync = createAsyncThunk(
+    "productDetail/getProductDetailAsync",
+    async (touristRouteId: string, thunkAPI) => {
+        const { data } = await axios.get(`http://localhost:5022/TouristRoutes/${touristRouteId}`);
+        return data;
+    });
 export const productDetailSlice = createSlice(
     {
         name: "productDetail",
         initialState,
-        reducers: {
-            fetchStart: (state) => {
+        reducers: {},
+        extraReducers: {
+            [getProductDetailAsync.pending.type]: (state) => {
                 //DO NOT need to use this way because redux toolkit has built-in Immer
                 // return {...state,loading:true};
                 state.loading = true;
                 state.requestError = null;
                 state.data = null;
             },
-            fetchSuccess: (state, action) => {
+            [getProductDetailAsync.fulfilled.type]: (state, action) => {
                 state.loading = false;
                 state.requestError = null;
                 state.data = action.payload;
             },
-            fetchFail: (state, action: PayloadAction<string | null>) => {
+            [getProductDetailAsync.rejected.type]: (state, action: PayloadAction<string | null>) => {
                 state.loading = false;
                 state.requestError = action.payload;
                 state.data = null;

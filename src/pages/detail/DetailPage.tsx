@@ -5,8 +5,8 @@ import { Spin, Row, Col, DatePicker, Divider, Typography, Anchor, Menu, MenuProp
 import { Header, Footer, ProductIntro, ProductComment } from "../../components";
 import Styles from './DetailPage.module.css';
 import { mockupComments, productPictures } from './mockupDetails';
-import { productDetailSlice } from '../../redux/productDetail/slice';
-import { useSelector } from '../../redux/hooks';
+import { productDetailSlice, getProductDetailAsync } from '../../redux/productDetail/slice';
+import { useSelector, useAppDispatch } from '../../redux/hooks';
 import { useDispatch } from 'react-redux';
 type MatchParams = {
     touristRouteId: string;
@@ -43,25 +43,11 @@ export const DetailPage: React.FC = () => {
     const productInfo = useSelector(state => state.productDetailReducer.data);
     const requestError = useSelector(state => state.productDetailReducer.requestError);
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();// useDispatch();
 
     useEffect(() => {
-        const fetchProductDetails = async () => {
-            dispatch(productDetailSlice.actions.fetchStart());
-            //setLoading(true);
-            try {
-                const { data } = await axios.get(`http://localhost:5022/TouristRoutes/${touristRouteId}`);
-                dispatch(productDetailSlice.actions.fetchSuccess(data));
-                //setProductInfo(data);
-            } catch (error) {
-                dispatch(productDetailSlice.actions.fetchFail(error instanceof Error ? error.message : "unknown error!"));
-                //setRequestError(error instanceof Error ? error.message : "error!");
-            }
-            // setLoading(false);
-        }
-
-        fetchProductDetails();
-
+        if (touristRouteId)
+            dispatch(getProductDetailAsync(touristRouteId));
     }, []);
 
 

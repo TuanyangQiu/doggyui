@@ -4,7 +4,7 @@ import recommendProductsReducer from "./recommendProducts/recommendProductsReduc
 import thunk from "redux-thunk";
 import { actionLog } from "./middlewares/actionLog";
 import { productDetailSlice } from "./productDetail/slice";
-import { combineReducers } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 //after used redux-toolkit, the combineReducer should come from redux toolkit instead of redux
 const rootReducer = combineReducers({
@@ -13,8 +13,12 @@ const rootReducer = combineReducers({
     productDetailReducer: productDetailSlice.reducer
 });
 
-const store = createStore(rootReducer, applyMiddleware(thunk, actionLog));
-
+// const store = createStore(rootReducer, applyMiddleware(thunk, actionLog));
+const store = configureStore({
+    reducer: rootReducer,
+    middleware: getDefaultMiddleware => getDefaultMiddleware().concat(actionLog),
+    devTools: true
+});
 export type RootState = ReturnType<typeof store.getState>;
-
+export type AppDispatch = typeof store.dispatch;
 export default store;
