@@ -9,3 +9,12 @@ I have previously developed an ASP.NET Restful API application called [DoggyRest
 npm install
 ```
 
+
+- The DoggyUI frontend project must interact with the DoggyRestApi backend project.
+Please Refer to the [readme](https://github.com/TuanyangQiu/DoggyRestApi#readme) of DoggyRestApi to start up the backend application
+
+- start up the DoggyUI frontend application
+```
+npm start
+```
+
