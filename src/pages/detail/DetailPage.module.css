@@ -8,6 +8,7 @@
 .product-intro-container {
 	margin-top: 20px;
 	background-color: white;
+
 }
 
 .product-detail-anchor {
@@ -17,8 +18,10 @@
 
 .product-detail-container {
 	background: white;
-	margin-top: 20px;
-	padding-top: 20px;
-	margin-bottom: 30px;
-	padding-bottom: 30px;
+	padding-bottom: 10px;
+}
+
+.product-detail-content {
+	margin-left: 30px;
+	margin-right: 80px;
 }

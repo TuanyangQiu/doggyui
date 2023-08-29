@@ -1,21 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
 import axios from "axios";
-import { Spin, Row, Col, DatePicker, Space } from "antd";
-import { Header, Footer, ProductIntro } from "../../components";
+import { Spin, Row, Col, DatePicker, Divider, Typography, Anchor, Menu, MenuProps } from "antd";
+import { Header, Footer, ProductIntro, ProductComment } from "../../components";
 import Styles from './DetailPage.module.css';
+import { mockupComments ,productPictures} from './mockupDetails';
 type MatchParams = {
     touristRouteId: string;
 }
 const { RangePicker } = DatePicker;
 
-// test picture url, will be updated later
-const testpicurl: string[] = [
-    "https://cdn.pixabay.com/photo/2013/07/18/20/26/sea-164989_1280.jpg",
-    "https://cdn.pixabay.com/photo/2013/07/18/20/26/sea-164989_1280.jpg",
-    "https://cdn.pixabay.com/photo/2013/07/18/20/26/sea-164989_1280.jpg",
-    "https://cdn.pixabay.com/photo/2013/07/18/20/26/sea-164989_1280.jpg",
-    "https://cdn.pixabay.com/photo/2013/07/18/20/26/sea-164989_1280.jpg"]
+
+const menuItems: MenuProps['items'] = [
+    {
+        label: (<a href="#feature"> Feature</a>),
+        key: '1',
+
+    },
+    {
+        label: (<a href="#fees"> Fees</a>),
+        key: '2',
+    },
+    {
+        label: (<a href="#notes"> Notes</a>),
+        key: '3',
+    },
+    {
+        label: (<a href="#commnet"> Comments</a>),
+        key: '4',
+    },
+];
+
 export const DetailPage: React.FC = () => {
 
     const { touristRouteId } = useParams<MatchParams>();
@@ -67,38 +82,61 @@ export const DetailPage: React.FC = () => {
             <div className={Styles["page-content"]}>
 
                 {/* Product introduction and date selection */}
-                <div className={Styles["product-intro-container"]}></div>
-                <Row>
-                    <Col span={13}>
-                        <ProductIntro
-                            title={productInfo.Title}
-                            shortDescription={productInfo.Description}
-                            price={productInfo.Price}
-                            coupons={"no cupon"}
-                            points={"no point"}
-                            discount={"no discount"}
-                            rating={productInfo.Rating}
-                            pictures={testpicurl} />
-                        {/* pictures={productInfo.TouristRoutePictures.map(p => p.url)} /> */}
-                    </Col>
-                    <Col span={11}>
-                        <RangePicker style={{ marginTop: 20 }} />
-                    </Col>
-                </Row>
+                <div className={Styles["product-intro-container"]}>
+                    <Row>
+                        <Col span={13}>
+                            <ProductIntro
+                                title={productInfo.Title}
+                                shortDescription={productInfo.Description}
+                                price={productInfo.Price}
+                                coupons={"no cupon"}
+                                points={"no point"}
+                                discount={"no discount"}
+                                rating={productInfo.Rating}
+                                pictures={productPictures} />
+                            {/* pictures={productInfo.TouristRoutePictures.map(p => p.url)} /> */}
+                        </Col>
+                        <Col span={11}>
+                            <RangePicker open style={{ marginTop: 20 }} />
+                        </Col>
+                    </Row></div>
                 {/* Anchor Menu */}
-                <div className={Styles["product-detail-anchor"]}></div>
+                <Anchor className={Styles["product-detail-anchor"]}>
+                    <Menu mode="horizontal" items={menuItems} />
+                </Anchor>
 
                 {/* Product features */}
-                <div className={Styles["product-detail-container"]} id="feature"></div>
+                <div className={Styles["product-detail-container"]} id="feature">
+                    <Divider orientation="center">
+                        <Typography.Title level={3} >Features</Typography.Title>
+                    </Divider>
+                    <Typography.Text className={Styles["product-detail-content"]} >{productInfo.Features}</Typography.Text>
+                </div>
 
                 {/* Fees instrument */}
-                <div className={Styles["product-detail-container"]} id="fees"></div>
+                <div className={Styles["product-detail-container"]} id="fees">
+                    <Divider orientation="center">
+                        <Typography.Title level={3} >Fees</Typography.Title>
+                    </Divider>
+                    <Typography.Text className={Styles["product-detail-content"]}>{productInfo.Fees}</Typography.Text>
+                </div>
+
 
                 {/* notes about the product */}
-                <div className={Styles["product-detail-container"]} id="notes"></div>
+                <div className={Styles["product-detail-container"]} id="notes">
+                    <Divider orientation="center">
+                        <Typography.Title level={3} >Notes</Typography.Title>
+                    </Divider>
+                    <Typography.Text className={Styles["product-detail-content"]} >{productInfo.Notes}</Typography.Text>
+                </div>
 
                 {/* comments */}
-                <div className={Styles["product-detail-container"]} id="comments"></div>
+                <div className={Styles["product-detail-container"]} id="comments">
+                    <Divider orientation="center">
+                        <Typography.Title level={3}>Comments</Typography.Title>
+                    </Divider>
+                    <ProductComment data={mockupComments} />
+                </div>
             </div>
             <Footer />
         </>
