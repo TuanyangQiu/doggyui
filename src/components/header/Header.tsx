@@ -42,7 +42,10 @@ export const Header: React.FC = () => {
                 <Typography.Title className={styles.title} level={3}>Doggy Travel</Typography.Title>
             </div>
             <div style={{ marginLeft: 200 }} >
-                <Input.Search className={styles['search-input']} placeholder='please input travel destination, countries, types' />
+                <Input.Search
+                    className={styles['search-input']}
+                    placeholder='please input travel destination, countries, types'
+                    onSearch={keyword => navigate(`/search/${keyword}`)} />
             </div>
 
 
