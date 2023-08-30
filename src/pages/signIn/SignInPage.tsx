@@ -1,8 +1,13 @@
 import React from "react";
-
-
+import { UserLayout } from "../../layouts/userLayout"
+import { SignInForm } from "./SignInForm";
 export const SignInPage: React.FC = () => {
 
-    return (<h2>Please Sign in here!!!</h2>);
+    return (
+        <UserLayout>
+
+            <SignInForm />
+
+        </UserLayout>)
 
 }
