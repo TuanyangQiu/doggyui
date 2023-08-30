@@ -5,6 +5,7 @@ import { useParams, useLocation } from "react-router-dom";
 import { productSearchResultSlice, searchProductAsync } from "../../redux/productSearchResult/slice";
 import { useSelector, useAppDispatch } from "../../redux/hooks";
 import { Spin } from "antd";
+import { MainLayout } from "../../layouts";
 type MatchParams = {
     keyword: string
 }
@@ -51,23 +52,19 @@ export const SearchResultsPage: React.FC = () => {
     console.log("pagination", pagination);
     // console.log("testd typeof", typeof testd);
     return (
-        <div>
+        <MainLayout>
 
 
-            <Header />
-            <div className={Styles["page-content"]}>
-                {/* Search Filter */}
-                <div className={Styles["product-list-container"]}>
-                    {/* FilterArea hasn't completed yet, currently just finished the UI.
+            {/* Search Filter */}
+            <div className={Styles["product-list-container"]}>
+                {/* FilterArea hasn't completed yet, currently just finished the UI.
                     data filtering is needed in the future*/}
-                    <FilterArea />
-                </div>
-
-                {/* Search results */}
-                <div className={Styles["product-list-container"]}>
-                    <ProductList data={productSearchResults} paging={pagination} onPageChange={onPageChange} />
-                </div>
+                <FilterArea />
             </div>
-            <Footer />
-        </div>);
+
+            {/* Search results */}
+            <div className={Styles["product-list-container"]}>
+                <ProductList data={productSearchResults} paging={pagination} onPageChange={onPageChange} />
+            </div>
+        </MainLayout>);
 }

@@ -13,7 +13,7 @@ import { withTranslation, WithTranslation } from "react-i18next";
 import { connect } from "react-redux";
 import { RootState } from "../../redux/store";
 import { FetchRecommendProductsActionCreator } from '../../redux/recommendProducts/recommendProductsActions';
-
+import { MainLayout } from "../../layouts";
 const mapStateToProps = (state: RootState) => {
     return {
         loading: state.recommendProducts.loading,
@@ -62,11 +62,9 @@ class HomePageComponent extends React.Component<PropsType> {
         if (requestError) {
             return <div>Sorry, {requestError.message}</div>;
         }
-        
+
         return (
-            <>
-                <Header />
-                <div className={Styles['page-content']} >
+            <MainLayout>
 
                     <Row style={{ marginTop: 20 }} >
                         <Col span={6}>
@@ -83,11 +81,9 @@ class HomePageComponent extends React.Component<PropsType> {
                         sideImage={SideImage1}
                         products={ProductsList} />
 
-                </div>
                 <BusinessPartner title={t("home_page.business_partner")} imageUrlList={[BussPartner1, BussPartner3, BussPartner2, BussPartner3, BussPartner4, BussPartner1, BussPartner4, BussPartner2, BussPartner3, BussPartner4, BussPartner1]} />
-                <Footer />
 
-            </>)
+            </MainLayout>)
     }
 }
 

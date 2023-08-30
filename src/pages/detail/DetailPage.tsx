@@ -8,6 +8,8 @@ import { mockupComments, productPictures } from './mockupDetails';
 import { productDetailSlice, getProductDetailAsync } from '../../redux/productDetail/slice';
 import { useSelector, useAppDispatch } from '../../redux/hooks';
 import { useDispatch } from 'react-redux';
+import { MainLayout } from "../../layouts";
+
 type MatchParams = {
     touristRouteId: string;
 }
@@ -71,10 +73,7 @@ export const DetailPage: React.FC = () => {
     }
 
     return (
-        <>
-            <Header />
-            <div className={Styles["page-content"]}>
-
+        <MainLayout>
                 {/* Product introduction and date selection */}
                 <div className={Styles["product-intro-container"]}>
                     <Row>
@@ -131,8 +130,6 @@ export const DetailPage: React.FC = () => {
                     </Divider>
                     <ProductComment data={mockupComments} />
                 </div>
-            </div>
-            <Footer />
-        </>
+        </MainLayout>
     )
 }
