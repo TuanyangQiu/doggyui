@@ -58,8 +58,9 @@ export const SearchResultsPage: React.FC = () => {
             <div className={Styles["page-content"]}>
                 {/* Search Filter */}
                 <div className={Styles["product-list-container"]}>
-
-
+                    {/* FilterArea hasn't completed yet, currently just finished the UI.
+                    data filtering is needed in the future*/}
+                    <FilterArea />
                 </div>
 
                 {/* Search results */}
