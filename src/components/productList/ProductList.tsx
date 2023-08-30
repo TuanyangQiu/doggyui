@@ -31,8 +31,8 @@ const listData = (productList: Product[]) =>
     description: p.Description,
     tags: (
       <>
-        {p.DepartureCity && <Tag color="#f50">{p.DepartureCity}出发</Tag>}
-        {p.TravelDays && <Tag color="#108ee9">{p.TravelDays} 天 </Tag>}
+        {p.DepartureCity && <Tag color="#f50">{p.DepartureCity}Departure</Tag>}
+        {p.TravelDays && <Tag color="#108ee9">{p.TravelDays} Days </Tag>}
         {/* {p.discountPresent && <Tag color="#87d068">超低折扣</Tag>} */}
         {p.TripType && <Tag color="#2db7f5">{p.TripType}</Tag>}
       </>
