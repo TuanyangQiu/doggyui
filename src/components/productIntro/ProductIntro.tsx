@@ -60,9 +60,9 @@ export const ProductIntro: React.FC<PropsType> = ({
             title: "Discount",
             description: discount ? (
                 <>
-                    ¥ <Typography.Text delete>{price}</Typography.Text>{" "}
+                    $ <Typography.Text delete>{price}</Typography.Text>{" "}
                     <Typography.Text type="danger" strong>
-                        ¥ {discount}
+                        $ {discount}
                     </Typography.Text>
                 </>
             ) : (
