@@ -3,28 +3,30 @@ import Styles from "./SignInForm.module.css";
 import { Button, Checkbox, Form, Input } from 'antd';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { UserSignInSlice, UserSignInRequestAsync } from "../../redux/userSignIn/slice";
+import { useAppDispatch, useSelector } from "../../redux/hooks";
+import { useEffect } from "react";
 export const SignInForm: React.FC = () => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    const loading = useSelector(state => state.userSignInReducer.loading);
+    const requestError = useSelector(state => state.userSignInReducer.requestError);
+    const jwtToken = useSelector(state => state.userSignInReducer.jwtToken);
     const onFinish = async (values: any) => {
 
-        let response: any;
-        try {
-            response = await axios.post("http://localhost:5022/auth/login",
-                {
-                    email: values.username,
-                    password: values.password
-                });
-
-            navigate("/");
-        } catch (error) {
-
-            alert("registration failed, please try again later");
-        }
+        dispatch(UserSignInRequestAsync({ userName: values.username, password: values.password }));
     };
 
     const onFinishFailed = (errorInfo: any) => {
 
     };
+
+    useEffect(() => {
+        if (requestError)
+            alert("sorry unable to sign in at the moment");
+        else if (jwtToken!==null)
+            navigate("/");
+    }, [requestError, jwtToken]);
 
     return (
         <Form
@@ -59,7 +61,7 @@ export const SignInForm: React.FC = () => {
 
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                 <Button type="primary" htmlType="submit">
-                    Submit
+                    Sign In
                 </Button>
             </Form.Item>
         </Form>
