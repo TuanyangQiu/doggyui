@@ -6,13 +6,14 @@ import { actionLog } from "./middlewares/actionLog";
 import { productDetailSlice } from "./productDetail/slice";
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { productSearchResultSlice } from "./productSearchResult/slice";
-
+import { UserSignInSlice } from "./userSignIn/slice";
 //after used redux-toolkit, the combineReducer should come from redux toolkit instead of redux
 const rootReducer = combineReducers({
     language: languageReducer,
     recommendProducts: recommendProductsReducer,
     productDetailReducer: productDetailSlice.reducer,
-    productSearchResultReducer: productSearchResultSlice.reducer
+    productSearchResultReducer: productSearchResultSlice.reducer,
+    userSignInReducer: UserSignInSlice.reducer
 });
 
 // const store = createStore(rootReducer, applyMiddleware(thunk, actionLog));
