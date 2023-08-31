@@ -1,7 +1,7 @@
 {
     "header": {
-        "register":"注册",
-        "signin":"登陆",
+        "register": "注册",
+        "signin": "登陆",
         "home_page": "旅游首页",
         "weekend": "周末游",
         "group": "跟团游",
@@ -13,16 +13,18 @@
         "theme": "主题游",
         "custom": "定制游",
         "study": "游学",
-        "visa":"签证",
-        "enterprise":"企业游",
-        "high_end":"高端游",
-        "outdoor":"爱玩户外",
-        "insurance":"保险",
-        "search_tips":"请输入感兴趣的目的地或者旅行类型"
-
+        "visa": "签证",
+        "enterprise": "企业游",
+        "high_end": "高端游",
+        "outdoor": "爱玩户外",
+        "insurance": "保险",
+        "search_tips": "请输入感兴趣的目的地或者旅行类型",
+        "shoppingCart": "购物车",
+        "signOut": "登出",
+        "welcome": "欢迎"
     },
     "footer": {
-        "copyright" : "版权所有 @ DoggyUI"
+        "copyright": "版权所有 @ DoggyUI"
     },
     "home_page": {
         "most_popular_dest": "热门目的地",
