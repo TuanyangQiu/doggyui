@@ -22,9 +22,13 @@ export const SignInForm: React.FC = () => {
     };
 
     useEffect(() => {
+        dispatch(UserSignInSlice.actions.ClearSignInStatus())
+    }, []);
+
+    useEffect(() => {
         if (requestError)
             alert("sorry unable to sign in at the moment");
-        else if (jwtToken!==null)
+        else if (jwtToken !== null)
             navigate("/");
     }, [requestError, jwtToken]);
 
