@@ -17,15 +17,17 @@ const initialState: UserSignInState = {
 
 export const UserSignInRequestAsync = createAsyncThunk(
     "UserSignIn/UserSignInRequestAsync",
-    async (params: { userName: string, password: string }, thunkApi) => {
+    async (params: { userName: string, password: string }, { rejectWithValue }) => {
         try {
-            const { data } = await axios.post("http://localhost:5022/auth/login", {
+            const response = await axios.post("http://localhost:5022/auth/login", {
                 email: params.userName,
                 password: params.password
             });
-            return data;
+
+            return response.data;
+
         } catch (error) {
-            return error;
+            return rejectWithValue(axios.isAxiosError(error) ? error.message : "unknown error!");
         }
 
     })
@@ -35,6 +37,11 @@ export const UserSignInSlice = createSlice({
     initialState: initialState,
     reducers: {
         SignOut: (state) => {
+            state.loading = false;
+            state.jwtToken = null;
+            state.requestError = null;
+        },
+        ClearSignInStatus: (state) => {
             state.loading = false;
             state.jwtToken = null;
             state.requestError = null;
