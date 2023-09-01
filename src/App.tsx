@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './App.module.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { HomePage, SignInPage, RegisterPage, DetailPage, SearchResultsPage } from './pages';
+import { HomePage, SignInPage, RegisterPage, DetailPage, SearchResultsPage, ShoppingCartPage, PlaceOrder } from './pages';
 import axios from 'axios';
-import { ShoppingCartPage } from "./pages/shoppingCart";
 import { Navigate } from "react-router-dom";
-import { useSelector } from "./redux/hooks";
+import { useSelector, useAppDispatch } from "./redux/hooks";
+import { GetShoppingCartItemsAsync } from "./redux/shoppingCart/slice";
+
+
 axios.defaults.headers["Accept"] = "application/json";
 
 
@@ -16,7 +18,18 @@ const PrivateRoute = ({ children }) => {
 }
 
 
+
+
 function App() {
+  const dispatch = useAppDispatch();
+  const jwtToken = useSelector(state => state.userSignInReducer.jwtToken);
+
+
+  useEffect(() => {
+    //preload the shopping cart information
+    if (jwtToken)
+      dispatch(GetShoppingCartItemsAsync({ jwtToken: jwtToken }));
+  }, [jwtToken]);
   return (
     <div className={styles.App}>
       <BrowserRouter>
@@ -31,6 +44,9 @@ function App() {
               <ShoppingCartPage />
             </PrivateRoute>} >
           </Route>
+
+
+
           <Route path="*" element={<h2>404 Page Not Found: Oops, it seems the page has gone on a coffee break </h2>}></Route>
         </Routes>
       </BrowserRouter>
