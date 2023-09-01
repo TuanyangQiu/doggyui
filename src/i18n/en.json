@@ -33,5 +33,28 @@
         "domestic_travel": "Domestic travel",
         "business_partner": "Business Partner",
         "start_from": "(start from)"
+    },
+    "productDetail": {
+        "addToCart": "Add To Cart"
+    },
+    "tripType": {
+        "tripType_0": "Outdoor",
+        "tripType_1": "Group",
+        "tripType_2": "Private",
+        "tripType_3": "BackPackTour",
+        "tripType_4": "Theme"
+    },
+    "departureCity": {
+        "departureCity_0": "Auckland",
+        "departureCity_1": "Wellington",
+        "departureCity_2": "Christchurch",
+        "departureCity_3": "Sydney"
+    },
+    "paymentCard": {
+        "bill": "Bill ",
+        "originalPrice": "Original Price",
+        "discountedPrice": "Discounted Price",
+        "checkout": "Check Out",
+        "removeAllItems": "Remove all"
     }
 }

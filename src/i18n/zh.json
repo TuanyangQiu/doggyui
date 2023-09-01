@@ -33,5 +33,28 @@
         "domestic_travel": "国内游推荐",
         "business_partner": "合作企业",
         "start_from": "(起)"
+    },
+    "productDetail": {
+        "addToCart": "加入购物车"
+    },
+    "tripType": {
+        "tripType_0": "户外",
+        "tripType_1": "跟团",
+        "tripType_2": "私家游",
+        "tripType_3": "背包客",
+        "tripType_4": "主题游"
+    },
+    "departureCity":{
+        "departureCity_0":"奥克兰",
+        "departureCity_1":"惠灵顿",
+        "departureCity_2":"基督城",
+        "departureCity_3":"悉尼"
+    },
+    "paymentCard": {
+        "bill": "账单 ",
+        "originalPrice": "原价",
+        "discountedPrice": "折后价",
+        "checkout": "下单",
+        "removeAllItems": "清空购物车"
     }
 }
