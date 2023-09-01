@@ -45,7 +45,11 @@ function App() {
             </PrivateRoute>} >
           </Route>
 
-
+          <Route path="/placeOrder" element={
+            <PrivateRoute>
+              <PlaceOrder />
+            </PrivateRoute>} >
+          </Route>
 
           <Route path="*" element={<h2>404 Page Not Found: Oops, it seems the page has gone on a coffee break </h2>}></Route>
         </Routes>
