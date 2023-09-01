@@ -24,10 +24,18 @@ export const Header: React.FC = () => {
     const { t } = useTranslation();
     const [userName, setUserName] = useState<string>("");
     const jwtToken = useSelector(state => state.userSignInReducer.jwtToken);
+    const shoppingCartItems = useSelector(state => state.shoppingCartReducer.items);
+    const shoppingCartLoading = useSelector(state => state.shoppingCartReducer.loading);
+
     useEffect(() => {
         if (jwtToken) {
-            const { name } = jwt_decode<JwtPayload>(jwtToken);
-            setUserName(name);
+            try {
+                const { name } = jwt_decode<JwtPayload>(jwtToken);
+                setUserName(name);
+            } catch (error) {
+
+            }
+
         }
     }, [jwtToken]);
 
@@ -58,7 +66,12 @@ export const Header: React.FC = () => {
                                 {userName}
                             </Typography.Text>
                         </span>
-                        <Button onClick={() => { navigate("/shoppingCart") }}>{t("header.shoppingCart")}</Button>
+                        <Button
+                            onClick={() => { navigate("/shoppingCart") }}
+                            loading={shoppingCartLoading}
+                        >
+                            {t("header.shoppingCart")} ({shoppingCartItems.length})
+                        </Button>
                         <Button
                             style={{ marginLeft: 5 }}
                             onClick={onSignOut}>
