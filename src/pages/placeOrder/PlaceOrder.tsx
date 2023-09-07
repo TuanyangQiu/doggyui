@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import Styles from "./PlaceOrder.module.css";
 import { PaymentForm, CheckOutCard, MockBankCardsList } from "../../components";
 import { MainLayout } from "../../layouts";
-import { Row, Col } from "antd";
-import { GetPendingOrdersAsync, ordersSlice } from "../../redux/order/slice";
+import { Row, Col,Typography } from "antd";
+import { GetPendingOrdersAsync, ordersSlice, payOrderAsync } from "../../redux/order/slice";
 import { useAppDispatch, useSelector } from "../../redux/hooks";
 export const PlaceOrder: React.FC = () => {
     const orderLoading = useSelector(state => state.orderReducer.loading);
@@ -17,21 +17,26 @@ export const PlaceOrder: React.FC = () => {
 
     return (
         <MainLayout>
-            <Row>
-                <Col span={12} >
-                    <MockBankCardsList />
-                    {/* <PaymentForm /> */}
-                </Col>
 
-                <Col span={12}>
-                    {pendingOrders !== null &&
-                        <CheckOutCard
-                            loading={orderLoading}
-                            order={pendingOrders}
-                            onCheckout={() => { dispatch(ordersSlice.actions.payMoney()) }} />
-                    }
-                </Col>
-                
-            </Row>
+
+            {
+                (Array.isArray(pendingOrders) && pendingOrders.length > 0) ? (<Row>
+                    <Col span={12} >
+                        <MockBankCardsList />
+                        {/* <PaymentForm /> */}
+                    </Col>
+
+                    <Col span={12}>
+                        {Array.isArray(pendingOrders) && pendingOrders.length > 0 &&
+                            <CheckOutCard
+                                loading={orderLoading}
+                                order={pendingOrders}
+                            />
+                        }
+                    </Col>
+
+                </Row>) : (<Typography.Title level={3}>Thank you, All orders have been paid </Typography.Title>)
+            }
+
         </MainLayout>);
 }
