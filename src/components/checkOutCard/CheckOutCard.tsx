@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Skeleton, Card, Button, Typography, Table, Result } from "antd";
 import { CheckCircleOutlined, HomeOutlined } from "@ant-design/icons";
 import { ColumnsType } from "antd/es/table";
 import { useNavigate } from "react-router-dom";
+import { GetPendingOrdersAsync, ordersSlice, payOrderAsync } from "../../redux/order/slice";
+import { useAppDispatch, useSelector } from "../../redux/hooks";
 
 const { Meta } = Card;
 const { Title, Text } = Typography;
@@ -29,20 +31,22 @@ const columns: ColumnsType<OrderItem> = [
 interface PropsType {
   loading: boolean;
   order: any;
-  onCheckout: () => void;
+  // onCheckout?: () => void;
 }
 
 export const CheckOutCard: React.FC<PropsType> = ({
   loading,
   order,
-  onCheckout,
+  // onCheckout,
 }) => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const jwtToken = useSelector(state => state.userSignInReducer.jwtToken) as string;
+  const orderStatus = useSelector(state => state.orderReducer.orderStatus);
 
-  // console.log("order.orderItems", Array.isArray(order.orderItems) && order.orderItems.length > 0);
-  const paymentData: OrderItem[] = Array.isArray(order.orderItems)
-    ? order.orderItems.map((i, index) => ({
-      key: index,
+  const paymentData: OrderItem[] = Array.isArray(order[0].orderItems)
+    ? order[0].orderItems.map((i, index) => ({
+      key: i.id,
       item: i.title,
       amount: (
         <>
@@ -85,7 +89,13 @@ export const CheckOutCard: React.FC<PropsType> = ({
           //   Return To Home Page
           // </Button>
         ) : (
-          <Button type="primary" danger onClick={onCheckout} loading={loading}>
+          <Button type="primary"
+            danger
+            onClick={() => {
+
+              dispatch(payOrderAsync({ jwtToken: jwtToken, orderId: order[0].id }))
+            }}
+            loading={loading}>
             <CheckCircleOutlined />
             Place Order
           </Button>
@@ -96,7 +106,7 @@ export const CheckOutCard: React.FC<PropsType> = ({
         <Meta
           title={
             <Title level={2}>
-              {order && order.state === "Completed" ? "Paid Successfully" : "Total"}
+              {orderStatus === "approved" ? "Paid Successfully" : "Total"}
             </Title>
           }
           description={
