@@ -70,7 +70,7 @@ export const Header: React.FC = () => {
                             onClick={() => { navigate("/shoppingCart") }}
                             loading={shoppingCartLoading}
                         >
-                            {t("header.shoppingCart")} ({shoppingCartItems.length})
+                            {t("header.shoppingCart")} ({shoppingCartItems && shoppingCartItems.length > 0 ? shoppingCartItems.length : 0})
                         </Button>
                         <Button
                             style={{ marginLeft: 5 }}
