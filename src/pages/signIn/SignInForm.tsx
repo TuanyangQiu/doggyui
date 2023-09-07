@@ -47,6 +47,7 @@ export const SignInForm: React.FC = () => {
                 label="Username"
                 name="username"
                 rules={[{ required: true, message: 'Please input your username!' }]}
+                initialValue={"tuanyang.qiu04@gmail.com"}//easy for test, 
             >
                 <Input />
             </Form.Item>
@@ -55,6 +56,7 @@ export const SignInForm: React.FC = () => {
                 label="Password"
                 name="password"
                 rules={[{ required: true, message: 'Please input your password!' }]}
+                initialValue={"!123ABCabc"}//easy for test, 
             >
                 <Input.Password />
             </Form.Item>
