@@ -41,6 +41,7 @@ interface PropsType {
   price: number;
   onShoppingCartClear: () => void;
   onCheckout: () => void;
+  hasItems : boolean;
 }
 
 export const PaymentCard: React.FC<PropsType> = ({
@@ -49,6 +50,7 @@ export const PaymentCard: React.FC<PropsType> = ({
   price,
   onShoppingCartClear,
   onCheckout,
+  hasItems
 }) => {
   const { t } = useTranslation();
   const paymentData: Item[] = [
@@ -72,11 +74,11 @@ export const PaymentCard: React.FC<PropsType> = ({
     <Card
       style={{ width: 350, marginTop: 16 }}
       actions={[
-        <Button type="primary" danger onClick={onCheckout} loading={loading}>
+        <Button type="primary" danger onClick={onCheckout} loading={loading} disabled={!hasItems} >
           <CheckCircleOutlined />
           {t("paymentCard.checkout")}
         </Button>,
-        <Button onClick={onShoppingCartClear} loading={loading}>
+        <Button onClick={onShoppingCartClear} loading={loading} disabled={!hasItems} >
           <DeleteOutlined />
           {t("paymentCard.removeAllItems")}
         </Button>,

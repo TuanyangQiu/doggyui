@@ -28,6 +28,7 @@ export const ShoppingCartPage: React.FC = () => {
                     <Affix>
                         <div className={Styles["payment-card-container"]}>
                             <PaymentCard
+                                hasItems={shoppingCartItems && shoppingCartItems.length > 0}
                                 loading={shoppingCartLoading}
                                 originalPrice={Array.isArray(shoppingCartItems) ? shoppingCartItems
                                     .map((s) => s.originalPrice)
